@@ -462,11 +462,11 @@ elif choice == "💰 Derivatives Pricing":
     with tab1:
         c1, c2 = st.columns([1, 2])
         with c1:
-            S = st.number_input("Spot ($)", 100.0, step=1.0)
-            K = st.number_input("Strike ($)", 100.0, step=5.0)
-            dte = st.number_input("DTE", 30, min_value=1)
-            sigma = st.number_input("Vol (%)", 25.0) / 100
-            r = st.number_input("Rf (%)", 4.5) / 100
+            S = st.number_input("Spot ($)", value=100.0, step=1.0)
+            K = st.number_input("Strike ($)", value=100.0, step=5.0)
+            dte = st.number_input("DTE", value=30, min_value=1)
+            sigma = st.number_input("Vol (%)", value=25.0) / 100
+            r = st.number_input("Rf (%)", value=4.5) / 100
             ot = st.radio("Type", ["Call", "Put"], horizontal=True)
         
         T = dte / 365.0
@@ -637,8 +637,8 @@ elif choice == "🔄 Backtesting":
         btk = st.text_input("Ticker", "SPY", key="btk")
         strat = st.selectbox("Strategy", ["SMA Crossover", "Mean Reversion", "Momentum"])
         yrs = st.slider("Years", 1, 10, 3)
-        fast = st.number_input("Fast MA", 20, min_value=2) if strat == "SMA Crossover" else 20
-        slow = st.number_input("Slow MA", 50, min_value=5) if strat == "SMA Crossover" else 50
+        fast = st.number_input("Fast MA", value=20, min_value=2) if strat == "SMA Crossover" else 20
+        slow = st.number_input("Slow MA", value=50, min_value=5) if strat == "SMA Crossover" else 50
     
     if st.button("▶️ Run Backtest", type="primary"):
         df = fetch_single(btk, datetime.date.today() - datetime.timedelta(yrs*365), datetime.date.today())
@@ -716,10 +716,10 @@ elif choice == "📐 Fixed Income":
     with tabs[0]:
         c1, c2 = st.columns([1, 2])
         with c1:
-            face = st.number_input("Face ($)", 1000.0)
-            cpn = st.number_input("Coupon (%)", 5.0) / 100
-            ytm = st.number_input("YTM (%)", 4.0) / 100
-            yrs = st.number_input("Years", 10, min_value=1)
+            face = st.number_input("Face ($)", value=1000.0)
+            cpn = st.number_input("Coupon (%)", value=5.0) / 100
+            ytm = st.number_input("YTM (%)", value=4.0) / 100
+            yrs = st.number_input("Years", value=10, min_value=1)
         
         with c2:
             bp, mac, mod, conv, dv01 = bond_price_full(face, cpn, ytm, yrs, 2)
