@@ -1415,13 +1415,14 @@ elif choice == "💱 FX Analytics":
         
         with st.spinner("Fetching FX data..."):
             fx_data = {}
+            start_d = datetime.date.today() - datetime.timedelta(days=365)
+            end_d = datetime.date.today()
+            
             for pair in fx_pairs:
-                try:
-                    df = yf.download(pair, period="1y", progress=False)
-                    if not df.empty:
-                        fx_data[pair.replace("=X", "")] = df["Close"]
-                except:
-                    pass
+                df = fetch_single(pair, start_d, end_d)
+                if not df.empty and "Close" in df.columns:
+                    # fetch_single already handles the MultiIndex, so this is a clean Series
+                    fx_data[pair.replace("=X", "")] = df["Close"]
         
         if fx_data:
             fx_df = pd.DataFrame(fx_data).dropna()
